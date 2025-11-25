@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Moçambique Jobs — Agregador de Vagas</title>
+  <meta name="description" content="Agregador de vagas em Moçambique com abas para Saúde, Engenharia e Função Pública. Mobile-first, rápido e simples." />
+
+  <!-- Fonte do sistema para rapidez; cores e espaçamentos minimalistas -->
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #0ea5e9;
+      --primary-600: #0284c7;
+      --card: #f8fafc;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+
+      --radius: 12px;
+      --space-1: 8px;
+      --space-2: 12px;
+      --space-3: 16px;
+      --space-4: 20px;
+      --space-5: 24px;
+    }
+
+    /* Reset simples e mobile-first */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a { color: var(--primary-600); text-decoration: none; }
+    img { max-width: 100%; height: auto; }
+
+    /* Container principal */
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: var(--space-4) var(--space-3) var(--space-5);
+    }
+
+    /* Cabeçalho fixo minimalista (mobile) */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: saturate(180%) blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      align-items: center;
+    }
+    .header-nav {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .nav-button {
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-weight: 600;
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .brand .dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--success));
+      display: inline-block;
+    }
+
+    /* Menu expansível */
+    .expandable-menu {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 var(--space-3) var(--space-3);
+      display: none; /* Escondido por padrão */
+    }
+    .expandable-menu.open {
+      display: block; /* Visível quando a classe 'open' é adicionada */
+    }
+
+
+    /* Abas principais */
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+      padding: var(--space-3);
+      border-bottom: 1px solid var(--border);
+    }
+    .tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--card);
+      color: var(--muted);
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .tab.active {
+      background: #e6f7ff;
+      border-color: #bae6fd;
+      color: var(--primary-600);
+    }
+
+    /* Área de filtros/Busca */
+    .filters {
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: 1fr;
+      padding: var(--space-3);
+      border-bottom: 1px solid var(--border);
+      background: #fff;
+    }
+    .filter-row {
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: 1fr 1fr;
+    }
+    .search-row {
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: 1fr auto;
+    }
+    .input, .select, .button {
+      appearance: none;
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      font-size: 16px;
+    }
+    .button {
+      border: none;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .button.secondary {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      font-weight: 600;
+    }
+
+    /* Lista de vagas (cards) */
+    .list {
+      display: grid;
+      gap: var(--space-3);
+      /* grid-template-columns: 1fr; /* Adicionado para consistência */
+      padding: var(--space-3);
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      padding: var(--space-3);
+      display: grid;
+      gap: var(--space-2);
+    }
+    .card-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: var(--space-2);
+    }
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .desc {
+      color: #334155;
+      font-size: 15px;
+    }
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .apply {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: var(--success);
+      color: white;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .save {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Rodapé simples */
+    .footer {
+      padding: var(--space-4) var(--space-3);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    /* Responsivo: em telas maiores, ampliar grid */
+    @media (min-width: 640px) {
+      .filter-row {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .list {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (min-width: 960px) {
+      .list {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="header" role="banner">
+    <div class="header-inner">
+      <div class="brand" aria-label="Moçambique Jobs">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Moçambique Jobs</span>
+      </div>
+      <nav class="header-nav" aria-label="Navegação principal">
+        <button class="tab active" role="tab" aria-selected="true" data-tab="todas">🔍 Todas</button>
+        <a href="servicos.html" class="nav-button" target="_blank" rel="noopener">Nossos Serviços</a>
+        <a href="#newsletter" class="nav-button" title="Subscreve alertas">🔔 Alertas</a>
+        <button id="menu-toggle" class="nav-button" style="border-color: var(--border);">☰ Categorias</button>
+      </nav>
+    </div>
+
+    <!-- Menu que será mostrado/escondido -->
+    <div id="expandable-menu" class="expandable-menu">
+      <!-- Abas: Saúde, Engenharia, Função Pública -->
+      <div class="tabs" role="tablist" aria-label="Categorias de vagas">
+        <button class="tab" role="tab" aria-selected="false" data-tab="saude">🏥 Saúde</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="engenharia">⚙️ Engenharia</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="publica">🏛️ Função Pública</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo -->
+  <main class="wrap" role="main">
+    <!-- Filtros/Busca -->
+    <section class="filters" aria-labelledby="filtros">
+      <h2 id="filtros" style="position:absolute; left:-9999px;">Filtros e busca</h2>
+      <div class="search-row">
+        <input id="q" class="input" type="search" placeholder="Pesquisar por título, empresa ou palavra-chave..." aria-label="Pesquisar vagas" />
+        <button id="btnSearch" class="button" aria-label="Aplicar busca">Buscar</button>
+      </div>
+      <div class="filter-row">
+        <select id="local" class="select" aria-label="Filtrar por localização">
+          <option value="">Localização (todas)</option>
+          <option>Maputo</option>
+          <option>Beira</option>
+          <option>Nampula</option>
+          <option>Tete</option>
+          <option>Matola</option>
+          <option>Chimoio</option>
+        </select>
+        <select id="contrato" class="select" aria-label="Filtrar por tipo de contrato">
+          <option value="">Contrato (todos)</option>
+          <option>Tempo integral</option>
+          <option>Meio período</option>
+          <option>Estágio</option>
+          <option>Remoto</option>
+        </select>
+        <select id="ordenar" class="select" aria-label="Ordenar">
+          <option value="recentes">Mais recentes</option>
+          <option value="antigos">Mais antigos</option>
+          <option value="empresa">Empresa (A–Z)</option>
+        </select>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <button id="btnClear" class="button secondary" aria-label="Limpar filtros">Limpar</button>
+        <button id="btnSubscribe" class="button secondary" aria-label="Subscrever alertas">Subscrever alertas WhatsApp</button>
+      </div>
+    </section>
+
+    <!-- Lista de vagas -->
+    <section class="list" id="list" aria-live="polite" aria-busy="false">
+      <!-- Os cards de vagas serão inseridos aqui dinamicamente pelo JavaScript -->
+    </section>
+
+    <!-- Newsletter / Alertas -->
+    <section id="newsletter" class="list" aria-labelledby="alertas">
+      <h2 id="alertas" style="position:absolute; left:-9999px;">Subscrever alertas</h2>
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="title">Recebe vagas no teu WhatsApp</h3>
+            <div class="meta">
+              <span>Sem spam • Cancela quando quiser</span>
+            </div>
+          </div>
+          <span class="badge">🔔 Alertas</span>
+        </div>
+        <p class="desc">
+          Escolhe a tua área (Saúde, Engenharia ou Função Pública) e recebe novas vagas assim que publicarmos.
+        </p>
+        <div class="card-actions">
+          <a class="apply" href="https://whatsapp.com/channel/0029Vb72CI01nozCnNDccH06" rel="noopener" target="_blank">Subscrever agora</a>
+          <button class="save">⚑ Saber mais</button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer" role="contentinfo">
+    © 2025 Moçambique Jobs • Feito para mobile • Transparência: sempre redirecionamos para a vaga original
+  </footer>
+
+  <!-- JS básico para tabs, busca e filtros (sem dependências) -->
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const list = document.getElementById('list');
+
+    const q = document.getElementById('q');
+    const local = document.getElementById('local');
+    const contrato = document.getElementById('contrato');
+    const ordenar = document.getElementById('ordenar');
+    const btnSearch = document.getElementById('btnSearch');
+    const btnClear = document.getElementById('btnClear');
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const expandableMenu = document.getElementById('expandable-menu');
+
+
+    let allJobs = []; // Armazenará todas as vagas do JSON
+    let activeTab = 'todas';
+
+    function setActiveTab(key) {
+      activeTab = key;
+      tabs.forEach(t => {
+        const on = t.dataset.tab === key;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      applyFilters();
+    }
+
+    tabs.forEach(t => t.addEventListener('click', () => setActiveTab(t.dataset.tab)));
+
+    // Funções de correspondência para filtros
+    function matchesText(job, text) {
+      if (!text) return true;
+      const hay = `${job.title} ${job.company} ${job.description}`.toLowerCase();
+      return hay.includes(text.toLowerCase().trim());
+    }
+
+    function matchesTab(job) {
+      if (activeTab === 'todas') return true;
+      return job.category === activeTab;
+    }
+
+    function matchesLocal(job, value) {
+      if (!value) return true;
+      return (job.location || '').toLowerCase() === value.toLowerCase();
+    }
+
+    function matchesContrato(job, value) {
+      if (!value) return true;
+      return (job.contract || '').toLowerCase() === value.toLowerCase();
+    }
+
+    // Nova função para renderizar os cards na tela
+    function renderJobs(jobs) {
+      list.innerHTML = ''; // Limpa a lista antes de renderizar
+      if (jobs.length === 0) {
+        list.innerHTML = '<p style="text-align: center; color: var(--muted);">Nenhuma vaga encontrada com os filtros selecionados.</p>';
+        return;
+      }
+
+      jobs.forEach(job => {
+        const cardHTML = `
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="title">${job.title}</h3>
+                <div class="meta">
+                  <span>${job.company}</span>
+                  <span>${job.location}</span>
+                  <span>Publicado: ${new Date(job.date).toLocaleDateString('pt-PT')}</span>
+                </div>
+              </div>
+              <span class="badge">${job.badge}</span>
+            </div>
+            <p class="desc">${job.description}</p>
+            <div class="card-actions">
+              <a class="apply" href="detalhes.html?id=${job.id}" aria-label="Ver detalhes da vaga ${job.title}">Ver Vaga</a>
+              <button class="save" aria-label="Guardar vaga">☆ Guardar</button> 
+            </div>
+          </article>
+        `;
+        list.insertAdjacentHTML('beforeend', cardHTML);
+      });
+
+      setupSaveButtons(); // Re-aplica os eventos aos novos botões
+    }
+
+    function applyFilters() {
+      const text = q.value.trim();
+      const loc = local.value.trim();
+      const con = contrato.value.trim();
+
+      // 1. Filtrar o array de vagas
+      let filteredJobs = allJobs.filter(job =>
+        matchesTab(job) &&
+        matchesText(job, text) &&
+        matchesLocal(job, loc) &&
+        matchesContrato(job, con)
+      );
+
+      // 2. Ordenar o array filtrado
+      switch (ordenar.value) {
+        case 'empresa':
+          filteredJobs.sort((a, b) => a.company.localeCompare(b.company));
+          break;
+        case 'antigos':
+          filteredJobs.sort((a, b) => new Date(a.date) - new Date(b.date));
+          break;
+        case 'recentes':
+        default:
+          filteredJobs.sort((a, b) => new Date(b.date) - new Date(a.date));
+          break;
+      }
+
+      // 3. Renderizar as vagas filtradas e ordenadas
+      renderJobs(filteredJobs);
+    }
+
+    btnSearch.addEventListener('click', applyFilters);
+    // Usar 'change' para selects é semanticamente mais correto
+    q.addEventListener('input', applyFilters);
+    [local, contrato, ordenar].forEach(el => el.addEventListener('change', applyFilters));
+
+    btnClear.addEventListener('click', () => {
+      q.value = '';
+      local.value = '';
+      contrato.value = '';
+      ordenar.value = 'recentes';
+      setActiveTab('todas');
+    });
+
+    // Função para gerir o estado dos botões "Guardar"
+    function setupSaveButtons() {
+      document.querySelectorAll('.card .save').forEach(btn => {
+        const card = btn.closest('.card');
+        const key = 'fav:' + card.querySelector('.title').textContent.trim();
+
+        // 1. Verificar estado inicial ao carregar a página
+        if (localStorage.getItem(key)) {
+          btn.textContent = '★ Guardado';
+        }
+
+        // 2. Adicionar evento de clique
+        btn.addEventListener('click', () => {
+          if (localStorage.getItem(key)) {
+            localStorage.removeItem(key);
+            btn.textContent = '☆ Guardar';
+          } else {
+            localStorage.setItem(key, '1');
+            btn.textContent = '★ Guardado';
+          }
+        });
+      });
+    }
+
+    // Botão de subscrever (placeholder)
+    document.getElementById('btnSubscribe')?.addEventListener('click', () => {
+      window.open('https://whatsapp.com/channel/0029Vb72CI01nozCnNDccH06', '_blank');
+    });
+
+    // Evento para o botão de menu
+    menuToggle.addEventListener('click', () => {
+      expandableMenu.classList.toggle('open');
+    });
+
+    // Função de inicialização que carrega os dados
+    async function init() {
+      try {
+        const response = await fetch('conteudo.json');
+        const jobsData = await response.json();
+        // Adiciona um ID único (o índice do array) a cada objeto de vaga
+        // Este ID será usado para encontrar a vaga na página de detalhes
+        allJobs = jobsData.map((job, index) => ({ ...job, id: index }));
+        applyFilters(); // Renderiza as vagas iniciais
+      } catch (error) {
+        console.error('Erro ao carregar as vagas:', error);
+        list.innerHTML = '<p style="text-align: center; color: var(--warning);">Ocorreu um erro ao carregar as vagas. Tente novamente mais tarde.</p>';
+      }
+    }
+
+    init(); // Inicia a aplicação
+  </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Detalhes do Serviço — Moçambique Jobs</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- Estilos reutilizados do site para consistência -->
+  <style>
+    :root {
+      --bg: #ffffff; --text: #0f172a; --muted: #475569; --primary: #0ea5e9;
+      --primary-600: #0284c7; --card: #f8fafc; --border: #e2e8f0; --success: #10b981;
+      --radius: 12px; --space-1: 8px; --space-2: 12px; --space-3: 16px; --space-4: 20px; --space-5: 24px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    a { color: var(--primary-600); text-decoration: none; }
+    .wrap { max-width: 800px; margin: 0 auto; padding: var(--space-4) var(--space-3) var(--space-5); }
+    .header { padding-bottom: var(--space-3); border-bottom: 1px solid var(--border); margin-bottom: var(--space-4); }
+    .brand { display: flex; align-items: center; gap: var(--space-2); font-weight: 700; font-size: 20px; }
+    .brand .dot { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--success)); }
+    .title { font-size: 28px; font-weight: 800; margin-bottom: var(--space-2); }
+    .content { font-size: 16px; color: #334155; }
+    .contact-button {
+      display: inline-block; padding: 14px 24px; border-radius: 10px; background: var(--success);
+      color: white; font-weight: 700; text-decoration: none; margin-top: var(--space-4);
+    }
+    .loading, .error { text-align: center; padding: var(--space-5); color: var(--muted); font-size: 18px; }
+    .footer {
+      padding: var(--space-4) var(--space-3); border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 14px; text-align: center; margin-top: var(--space-5);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="wrap" id="service-details-container">
+    <!-- Conteúdo será inserido aqui -->
+    <div class="loading">A carregar detalhes do serviço...</div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <a href="servicos.html" style="font-weight: 600;">← Voltar para todos os serviços</a>
+    <p style="margin-top: 16px;">© 2025 Moçambique Jobs • O seu portal de oportunidades</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Armazena os detalhes de cada serviço aqui
+      const servicesData = {
+        curriculos: {
+          title: "Criação de Currículos Profissionais",
+          description: `
+            <p>Eu ajudo você a destacar suas habilidades, experiências e conquistas de forma clara, estratégica e atrativa para recrutadores. Cada currículo é personalizado para refletir sua trajetória profissional e aumentar suas chances de conquistar entrevistas e oportunidades.</p>
+            <p>📌 <b>Currículos sob medida:</b> adaptados ao seu perfil e área de atuação.<br>
+               🎯 <b>Foco em resultados:</b> destaque para suas principais competências e conquistas.<br>
+               💼 <b>Profissionalismo e impacto:</b> design moderno e conteúdo objetivo que chama atenção.<br>
+               🚀 <b>Mais oportunidades:</b> aumente sua visibilidade e credibilidade no mercado de trabalho.</p>
+            <p>Seu futuro começa com um currículo bem feito. Invista em você e conquiste a vaga dos seus sonhos!</p>`,
+          whatsappLink: "https://wa.me/SEUNUMERO?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20a%20Criação%20de%20Currículos."
+        },
+        cartas: {
+          title: "Cartas de Apresentação Persuasivas",
+          description: `
+            <p>Destaque-se antes mesmo da entrevista. A carta de apresentação é a sua oportunidade de mostrar motivação, personalidade e adequação à vaga. Eu elaboro cartas personalizadas que conectam sua experiência ao que a empresa busca, transmitindo profissionalismo e autenticidade.</p>
+            <p>🖋️ <b>Texto estratégico:</b> alinhado ao perfil da vaga e ao seu currículo.<br>
+               🎯 <b>Tom persuasivo:</b> demonstra entusiasmo e credibilidade.<br>
+               💡 <b>Personalização:</b> cada carta reflete sua trajetória e objetivos.<br>
+               🚀 <b>Impacto imediato:</b> desperte o interesse do recrutador já no primeiro contato.</p>
+            <p>Não deixe sua candidatura passar despercebida. Uma carta bem escrita pode ser o diferencial que garante sua entrevista!</p>
+          `,
+          whatsappLink: "https://wa.me/SEUNUMERO?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20as%20Cartas%20de%20Apresentação."
+        },
+        ebooks: {
+          title: "E-books para Impulsionar sua Carreira",
+          description: "Conhecimento é poder. Acesse nossa coleção de e-books com guias práticos, dicas de especialistas e estratégias comprovadas para navegar no mercado de trabalho, preparar-se para entrevistas e acelerar o seu crescimento profissional.",
+          whatsappLink: "https://wa.me/SEUNUMERO?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20os%20E-books."
+        },
+        parceiros: {
+          title: "Parceiros do Site",
+          description: "Acreditamos no poder da colaboração. Conheça as empresas, instituições e projetos que são nossos parceiros. Juntos, trabalhamos para fortalecer o ecossistema de empregos em Moçambique e criar mais oportunidades para todos.",
+          whatsappLink: "https://wa.me/SEUNUMERO?text=Olá,%20tenho%20interesse%20em%20discutir%20uma%20parceria."
+        }
+      };
+
+      const container = document.getElementById('service-details-container');
+      const urlParams = new URLSearchParams(window.location.search);
+      const serviceKey = urlParams.get('servico');
+
+      const service = servicesData[serviceKey];
+
+      if (!service) {
+        container.innerHTML = '<div class="error">Serviço não encontrado. Por favor, volte à página de serviços e tente novamente.</div>';
+        return;
+      }
+
+      // Atualiza o título da página
+      document.title = `${service.title} — Moçambique Jobs`;
+
+      // Constrói e insere o HTML
+      const serviceHTML = `
+        <header class="header">
+          <div class="brand" aria-label="Moçambique Jobs">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Moçambique Jobs</span>
+          </div>
+        </header>
+
+        <div>
+          <h1 class="title">${service.title}</h1>
+          <div class="content">
+            <p>${service.description}</p>
+          </div>
+          <a href="${service.whatsappLink}" class="contact-button" rel="noopener" target="_blank">Contactar via WhatsApp</a>
+        </div>
+      `;
+
+      container.innerHTML = serviceHTML;
+    });
+  </script>
+</body>
+</html>

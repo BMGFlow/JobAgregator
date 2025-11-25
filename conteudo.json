@@ -1,0 +1,62 @@
+[
+  {
+    "category": "saude",
+    "location": "Beira",
+    "contract": "Tempo integral",
+    "date": "2025-11-24",
+    "company": "Hospital Central da Beira",
+    "title": "Enfermeiro(a) Geral",
+    "description": "Assistência de enfermagem em enfermaria geral. Requisitos: licenciatura em enfermagem, inscrição ativa, experiência mínima de 1 ano.",
+    "badge": "🏥 Saúde"
+  },
+  {
+    "category": "engenharia",
+    "location": "Maputo",
+    "contract": "Tempo integral",
+    "date": "2025-11-23",
+    "company": "ConstruMoç",
+    "title": "Engenheiro Civil Júnior",
+    "description": "Apoio em obras, leitura de projetos, fiscalização e relatórios. Requisitos: formação em engenharia civil, conhecimento em AutoCAD.",
+    "badge": "⚙️ Engenharia"
+  },
+  {
+    "category": "publica",
+    "location": "Nampula",
+    "contract": "Meio período",
+    "date": "2025-11-22",
+    "company": "Ministério da Educação",
+    "title": "Assistente Administrativo",
+    "description": "Gestão de documentação, atendimento ao público e apoio administrativo. Requisitos: 12ª classe, conhecimentos de informática básica.",
+    "badge": "🏛️ Função Pública"
+  },
+  {
+    "category": "saude",
+    "location": "Maputo",
+    "contract": "Estágio",
+    "date": "2025-11-20",
+    "company": "BioMoz",
+    "title": "Técnico de Laboratório (Estágio)",
+    "description": "Preparação de amostras, apoio em análises e manutenção básica de equipamentos. Requisitos: curso técnico em laboratório.",
+    "badge": "🏥 Saúde"
+  },
+  {
+    "category": "engenharia",
+    "location": "Beira",
+    "contract": "Remoto",
+    "date": "2025-11-21",
+    "company": "TechMap",
+    "title": "Engenheiro de Software",
+    "description": "Desenvolvimento de aplicações web, APIs e integrações. Requisitos: experiência com Python/Node, bases de dados e versionamento.",
+    "badge": "⚙️ Engenharia"
+  },
+    {
+    "category": "engenharia",
+    "location": "Beira",
+    "contract": "Remoto",
+    "date": "2025-11-21",
+    "company": "EDM",
+    "title": "Técnico de Eletrecidade",
+    "description": "Desenvolvimento de aplicações web, APIs e integrações. Requisitos: experiência com Python/Node, bases de dados e versionamento.",
+    "badge": "⚙️ Engenharia"
+  }
+]
